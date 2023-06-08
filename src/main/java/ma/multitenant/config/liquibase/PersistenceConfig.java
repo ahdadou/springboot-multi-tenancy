@@ -11,20 +11,20 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 @Configuration
-public class PersistanceConfig {
+public class PersistenceConfig {
 
     @Autowired
     private PersistenceProps persistenceProps;
 
     @Bean
-    @ConditionalOnExpression("${application.persistance.multi-tenancy:false}")
+    @ConditionalOnExpression("${application.persistence.multi-tenancy:false}")
     public DataSource createMultiTenantDatasource(@Value("${application-name}") String serviceName) {
-        return this.bootstrapDatasource(new MultitenantDataSource(persistenceProps.getTenants(),serviceName));
+        return this.bootstrapDatasource(new MultiTenantDataSource(persistenceProps.getDatabaseUrls(),serviceName));
     }
 
 
     @Bean
-    @ConditionalOnExpression("!${application.persistance.multi-tenancy:false}")
+    @ConditionalOnExpression("!${application.persistence.multi-tenancy:false}")
     public DataSource createSimpleDataSource(@Value("${application-name}") String serviceName,@Value("${application-database-url}") String databaseUrl) {
 
         DataSourceProperties dataSourceProperties = DataSourceProperties.create(serviceName,databaseUrl);

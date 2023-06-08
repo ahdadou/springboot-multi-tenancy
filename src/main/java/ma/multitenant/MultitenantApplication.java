@@ -22,6 +22,7 @@ public class MultitenantApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(AuthorRepository authorRepository) {
 		return args -> {
+			// ADDING AUTHOR TO CASA SCHEMA
 			TenantContext.setCurrentTenant(TenantId.CASA);
 			Author author = new Author(12,"author1");
 			authorRepository.save(author);

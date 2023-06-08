@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class MultitenantDataSource  extends AbstractRoutingDataSource {
+public class MultiTenantDataSource extends AbstractRoutingDataSource {
 
     private final Map<Object, Object> resolvedDataSources = new ConcurrentHashMap();
     private final List<DataSource> datasourceList;
@@ -26,7 +26,7 @@ public class MultitenantDataSource  extends AbstractRoutingDataSource {
         return TenantContext.getCurrentTenant().map(Enum::name).orElse(null);
     }
 
-    public MultitenantDataSource(final Map<String, String> databases,final String serviceName) {
+    public MultiTenantDataSource(final Map<String, String> databases, final String serviceName) {
         if(MapUtils.isEmpty(databases)) {
             throw new IllegalArgumentException("No databases configured");
         }
@@ -34,7 +34,6 @@ public class MultitenantDataSource  extends AbstractRoutingDataSource {
         databases.forEach((tenant, url) -> {
             resolvedDataSources.put(tenant, createDatasource(serviceName,DataSourceProperties.create(tenant, url.trim())));
         });
-//        super.setDefaultTargetDataSource(new NoEntityDataSource());
         super.setTargetDataSources(resolvedDataSources);
         datasourceList = resolvedDataSources.values().stream().map(dataSource -> (DataSource) dataSource).collect(Collectors.toList());
     }

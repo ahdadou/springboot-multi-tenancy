@@ -6,18 +6,22 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
-@ConfigurationProperties(prefix="datasource")
+@ConfigurationProperties(prefix="application.persistence")
 @Configuration
 public class PersistenceProps {
 
-    private Map<String, String> tenants = new HashMap<>();
-    private String url;
+    private Map<String, String> databaseUrls = new HashMap<>();
+    private String databaseUrl;
 
-    public Map<String, String> getTenants() {
-        return tenants;
+    public Map<String, String> getDatabaseUrls() {
+        return databaseUrls;
     }
 
     public String getDatabaseUrl() {
-        return url;
+        return databaseUrl;
+    }
+
+    public void setDatabaseUrl(String databaseUrl) {
+        this.databaseUrl = databaseUrl;
     }
 }

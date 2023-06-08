@@ -11,9 +11,6 @@ import jakarta.persistence.Table;
 @Table(name = "authors")
 public class Author {
 
-    /**
-     * Explaining strategies: https://thoughts-on-java.org/jpa-generate-primary-keys/
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

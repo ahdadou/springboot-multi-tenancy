@@ -1,23 +1,23 @@
 application-name: application-multitenant
-application.persistance.multi-tenancy: true
 
 spring.liquibase.enabled: false
 spring.jpa.hibernate.ddl-auto: none
 logging.level.liquibase : DEBUG
 
-datasource.tenants:
-  CASA: postgres://postgres:postgres@localhost:5432/stock?schema=CASA
-  FES: postgres://postgres:postgres@localhost:5432/stock?schema=FES
-
-application-database-url: postgres://postgres:postgres@localhost:5432/stock?schema=FES
-
+application:
+  persistence:
+    database_urls:
+      CASA: postgres://postgres:postgres@localhost:5432/stock?schema=CASA
+      FES: postgres://postgres:postgres@localhost:5432/stock?schema=FES
+    database_url: postgres://postgres:postgres@localhost:5432/stock?schema=FES
+    multi-tenancy: true
 
 spring.jpa:
-    properties.hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
-          globally_quoted_identifiers: true
-    hibernate:
-        ddl-auto: none
-        naming:
-            physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  properties.hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    globally_quoted_identifiers: true
+  hibernate:
+    ddl-auto: none
+    naming:
+      physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 

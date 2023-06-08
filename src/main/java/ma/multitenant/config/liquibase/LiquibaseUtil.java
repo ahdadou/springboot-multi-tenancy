@@ -13,18 +13,14 @@ import java.util.Map;
 public class LiquibaseUtil {
 
     public static void bootstrap(DataSource  dataSource) {
-        try {
-            if(dataSource instanceof HikariDataSource ds){
-                LiquibaseUtil.bootstrap(ds);
-            } else if(dataSource instanceof MultitenantDataSource multitenantDataSource) {
-                for(DataSource ds:multitenantDataSource.getDatasourceList()){
-                    bootstrap((HikariDataSource) ds);
-                }
-            } else {
-                throw new TechnicalException("Datasource not supported");
+        if(dataSource instanceof HikariDataSource ds){
+            LiquibaseUtil.bootstrap(ds);
+        } else if(dataSource instanceof MultiTenantDataSource multitenantDataSource) {
+            for(DataSource ds:multitenantDataSource.getDatasourceList()){
+                bootstrap((HikariDataSource) ds);
             }
-        } catch (Exception e) {
-            throw e;
+        } else {
+            throw new TechnicalException("Datasource not supported");
         }
     }
 
@@ -33,9 +29,11 @@ public class LiquibaseUtil {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setChangeLog("classpath:db/changelog-master.xml");
         liquibase.setDropFirst(false);
-        liquibase.setChangeLogParameters(Map.of("service.name", dataSource.getPoolName()));
-        liquibase.setDatabaseChangeLogLockTable(dataSource.getPoolName() + "_changelog_lock");
-        liquibase.setDatabaseChangeLogTable(dataSource.getPoolName() + "_changelog");
+        if(StringUtils.isNotBlank(dataSource.getPoolName())) {
+            liquibase.setChangeLogParameters(Map.of("service.name", dataSource.getPoolName()));
+            liquibase.setDatabaseChangeLogLockTable(dataSource.getPoolName() + "_changelog_lock");
+            liquibase.setDatabaseChangeLogTable(dataSource.getPoolName() + "_changelog");
+        }
         liquibase.setResourceLoader(new DefaultResourceLoader());
         liquibase.setDataSource(dataSource);
         if(StringUtils.isNotBlank(dataSource.getSchema())) {
