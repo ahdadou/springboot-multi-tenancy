@@ -62,3 +62,13 @@ In the `application.persistence.database_urls` section, you can define the datab
 Furthermore, the `application.persistence.database_url` property represents the database URL to be used in the normal database mode (when multi-tenancy is disabled). In this example, the URL corresponds to the `FES` schema.
 
 By adjusting these configurations in the `application.properties` file, you can seamlessly switch between multi-tenant and normal database configurations based on your requirements.
+
+####  Describing Code and Class Techniques
+
+Throughout the project, several techniques are employed to enhance functionality and maintain a structured codebase. Here are some notable examples:
+
+1.  **DataSourceProperties:** The `DataSourceProperties` class plays a crucial role in converting and extracting information from the `database_url` into a dedicated object. By utilizing the Java `URL` class and regular expressions, the `database_url` is deconstructed to obtain the necessary details such as username, password, JDBC URL, driver class name, and schema. This ensures that the database properties are organized and easily accessible for establishing connections.
+    
+2.  **PersistenceConfig, MultiTenantDataSource, and LiquibaseUtil:** These classes make use of Liquibase, an open-source database schema management tool, to handle database migrations and creation. The `PersistenceConfig` class sets up the necessary configurations for the persistence layer, while the `MultiTenantDataSource` class provides a customized data source implementation that handles tenant-specific connections. Additionally, `LiquibaseUtil` assists in executing changesets defined in resource files, enabling seamless database migration and version control.
+    
+3.  **TenantFilter:** The `TenantFilter` class implements a servlet filter that intercepts incoming requests and sets the `TenantContext` based on the `X-TenantID` header provided by the user. This technique ensures that each request is associated with the correct tenant, facilitating data isolation and tenant-specific operations throughout the application.
