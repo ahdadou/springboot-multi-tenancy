@@ -15,7 +15,7 @@ To manage the creation of tables and database schema changes, we employ Liquibas
 By following the guidelines and best practices outlined in this project, developers will gain a clear understanding of multitenancy concepts and be able to leverage PostgreSQL and Liquibase to efficiently implement and manage multitenancy in their applications.
 
 <!-- ![photo_2023-06-09_21-34-00](https://github.com/ahdadou/springboot-multi-tenancy/assets/68736304/1c1a95ea-f62e-48a4-bced-1988238e7250 ) -->
-<img src="[https://github.com/your_image.png](https://github.com/ahdadou/springboot-multi-tenancy/assets/68736304/1c1a95ea-f62e-48a4-bced-1988238e7250)" alt="Your image title" width="250"/>
+<img src="https://github.com/ahdadou/springboot-multi-tenancy/assets/68736304/1c1a95ea-f62e-48a4-bced-1988238e7250" alt="Your image title" width="250"/>
 
 ### Getting Started
 
