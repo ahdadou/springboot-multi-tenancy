@@ -1,3 +1,4 @@
+
 # Multitenancy Project README
 
 ###  Overview 
@@ -7,13 +8,9 @@ This project is designed to provide a comprehensive guide on implementing and ut
 
 <img src="https://github.com/ahdadou/springboot-multi-tenancy/assets/68736304/326af24b-eac1-4fff-862b-cbe3c6078f51" alt="Your image title" width="350"/>
 
-This project is designed to provide a comprehensive guide on implementing and utilizing multitenancy using the CASA, TET, FES, and RABAT schemas. It aims to assist developers in understanding the concept of multitenancy and how it can be applied within their applications.
-
 In this project, we utilize the PostgreSQL database as the underlying data storage system. It is important to have PostgreSQL installed and properly configured before proceeding with the instructions provided in the documentation.
 
 To manage the creation of tables and database schema changes, we employ Liquibase, an open-source database schema management tool. Liquibase allows for versioning, tracking, and executing database schema changes in an organized and controlled manner.
-
-By following the guidelines and best practices outlined in this project, developers will gain a clear understanding of multitenancy concepts and be able to leverage PostgreSQL and Liquibase to efficiently implement and manage multitenancy in their applications.
 
 ### Getting Started
 
@@ -44,3 +41,24 @@ In this example, we are using the `CommandLineRunner` interface to execute code 
 Then, we create an `Author` object and save it using the `authorRepository.save(author)` method. Since the current schema is set to CASA, the `Author` object will be saved in the CASA schema.
 
 By leveraging this approach, you can dynamically switch between different schemas based on your application's requirements. This allows for efficient data isolation and management for each tenant within the multitenant environment.
+
+#####  Switching Between Multi-Tenant and Normal Database Configurations
+Also you can switch between multi-tenant and normal database configurations by modifying the `application.properties` file.
+
+Let's take a look at the relevant configuration:
+
+    application:  
+	    persistence:  
+		    database_urls:  
+			    CASA: postgres://postgres:postgres@localhost:5432/stock?schema=CASA  
+			    FES: postgres://postgres:postgres@localhost:5432/stock?schema=FES  
+		    database_url: postgres://postgres:postgres@localhost:5432/stock?schema=FES  
+		    multi-tenancy: true
+
+By setting `application.persistence.multi-tenancy` to `true`, you enable the multi-tenant configuration. This indicates that the application should operate in a multi-tenant mode where the schema is dynamically determined based on the current tenant.
+
+In the `application.persistence.database_urls` section, you can define the database URLs for each schema. For example, `CASA` and `FES` schemas have their respective URLs specified with the schema names included as parameters. These URLs are used to establish connections with the respective schemas when the application is running in multi-tenant mode.
+
+Furthermore, the `application.persistence.database_url` property represents the database URL to be used in the normal database mode (when multi-tenancy is disabled). In this example, the URL corresponds to the `FES` schema.
+
+By adjusting these configurations in the `application.properties` file, you can seamlessly switch between multi-tenant and normal database configurations based on your requirements.
