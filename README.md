@@ -4,6 +4,7 @@
 This project is designed to provide a comprehensive guide on implementing and utilizing multitenancy using the CASA, TET, FES, and RABAT schemas. It aims to assist developers in understanding the concept of multitenancy and how it can be applied within their applications. 
 
 ###  Introduction
+![photo_2023-06-09_21-34-00](https://github.com/ahdadou/springboot-multi-tenancy/assets/68736304/1c1a95ea-f62e-48a4-bced-1988238e7250)
 
 
 This project is designed to provide a comprehensive guide on implementing and utilizing multitenancy using the CASA, TET, FES, and RABAT schemas. It aims to assist developers in understanding the concept of multitenancy and how it can be applied within their applications.
