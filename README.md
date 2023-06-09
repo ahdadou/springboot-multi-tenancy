@@ -22,3 +22,24 @@ By following the guidelines and best practices outlined in this project, develop
    database management system after running the project.
  - Familiarize yourself with the best practices section to ensure a
    successful implementation of multitenancy in your application.
+
+   ### How does it work
+
+In this project, we utilize the `TenantContext` class along with `ThreadLocal` to dynamically set the current tenant/schema for data storage. The `ThreadLocal` allows us to maintain separate data contexts for each thread in a multithreaded environment.
+
+Let's take a closer look at the code snippet provided:
+
+     @Bean  
+     CommandLineRunner commandLineRunner(AuthorRepository authorRepository) {  
+        return args -> {  
+	        // ADDING AUTHOR TO CASA SCHEMA  
+	        TenantContext.setCurrentTenant(TenantId.CASA);  
+	        Author author = new Author(12,"author1");  
+	        authorRepository.save(author);  
+        };  
+      }
+In this example, we are using the `CommandLineRunner` interface to execute code at application startup. We set the current tenant/schema to "CASA" using `TenantContext.setCurrentTenant(TenantId.CASA)`. This sets the `ThreadLocal` value for the current thread, ensuring that any subsequent data operations are performed in the CASA schema.
+
+Then, we create an `Author` object and save it using the `authorRepository.save(author)` method. Since the current schema is set to CASA, the `Author` object will be saved in the CASA schema.
+
+By leveraging this approach, you can dynamically switch between different schemas based on your application's requirements. This allows for efficient data isolation and management for each tenant within the multitenant environment.
